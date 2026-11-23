@@ -29,7 +29,10 @@ app.set('io', io);
 // Middleware
 app.use(cors({ origin: 'http://localhost:5173' }));
 app.use(express.json());
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+
+// NOTA DE SEGURIDAD: /uploads NO se expone como ruta estática pública.
+// Los archivos de voucher se sirven solo a través del endpoint protegido
+// GET /api/vouchers/archivo/:filename (requiere token JWT válido).
 
 // Rutas
 app.use('/api/auth', authRoutes);

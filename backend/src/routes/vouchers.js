@@ -366,4 +366,23 @@ router.patch('/:id/revisar', verificarToken, verificarRol('contabilidad', 'admin
   }
 });
 
+// GET /api/vouchers/archivo/:filename — Servir imagen de voucher solo a usuarios autenticados
+router.get('/archivo/:filename', verificarToken, (req, res) => {
+  const filename = path.basename(req.params.filename); // evitar path traversal
+  const filePath = path.join(__dirname, '../../uploads/vouchers', filename);
+
+  if (!fs.existsSync(filePath)) {
+    return res.status(404).json({ error: 'Archivo no encontrado' });
+  }
+
+  // Solo JPEG y PNG
+  const ext = path.extname(filename).toLowerCase();
+  const mimeTypes = { '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png' };
+  const mime = mimeTypes[ext] || 'application/octet-stream';
+
+  res.setHeader('Content-Type', mime);
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.sendFile(filePath);
+});
+
 module.exports = router;
