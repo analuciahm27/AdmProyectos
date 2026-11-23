@@ -380,7 +380,15 @@ async function main() {
   const tiemposContables = [];
   const MUESTRAS = 10; // 10 ciclos completos medidos
 
+  // Usar el voucher real para todos los ciclos — las imágenes sintéticas dan 400 en OCR.space
+  const voucherRealM2 = path.join(__dirname, '../uploads/vouchers/voucher-1791328996970-599386229.png');
+  if (!fs.existsSync(voucherRealM2)) {
+    console.error(`${FAIL} Voucher real no encontrado en uploads. Coloca un PNG real en uploads/vouchers/`);
+    process.exit(1);
+  }
+
   console.log(`   ${INFO} Ejecutando ${MUESTRAS} ciclos pedido→voucher→aprobación→almacén...`);
+  console.log(`   ${INFO} Usando voucher real: ${path.basename(voucherRealM2)}`);
 
   for (let i = 0; i < MUESTRAS; i++) {
     // 1. Crear pedido
@@ -394,9 +402,9 @@ async function main() {
     if (pRes.status !== 201) continue;
     const pid = pRes.body.id;
 
-    // 2. Cargar voucher PNG sintético
+    // 2. Cargar voucher PNG real (OCR.space requiere imágenes con contenido real)
     const form = new FormData();
-    form.append('voucher', crearPngMinimo(), {
+    form.append('voucher', fs.createReadStream(voucherRealM2), {
       filename: `voucher-m2-${i}.png`,
       contentType: 'image/png',
     });

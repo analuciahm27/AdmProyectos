@@ -1,5 +1,5 @@
 {
-  "ejecutadoEn": "2026-11-23T20:01:31.996Z",
+  "ejecutadoEn": "2026-11-23T20:06:20.076Z",
   "totalCasos": 15,
   "conformes": 15,
   "noConformes": 0,
@@ -26,9 +26,9 @@
     {
       "id": "CP-01c",
       "nombre": "Verificar vínculo pedido-voucher en base de datos",
-      "entrada": "pedidoId: 3af560b8-a862-4a6b-b459-7918b298e130",
+      "entrada": "pedidoId: d64a4d18-ce36-4a30-bb93-1bb4d2ddfa7e",
       "esperado": "Voucher presente y vinculado en base de datos",
-      "obtenido": "Vinculado — imagenNombre: voucher-1795464071592-746785816.png",
+      "obtenido": "Vinculado — imagenNombre: voucher-1795464352372-269943094.png",
       "conforme": true,
       "nota": ""
     },
@@ -62,9 +62,9 @@
     {
       "id": "CP-03",
       "nombre": "Extracción OCR con API real (OCR.space)",
-      "entrada": "13 voucher(s) en BD — API key activa: K8222...",
+      "entrada": "24 voucher(s) en BD — API key activa: K8222...",
       "esperado": "API real activa, confianza > 0, campos extraídos correctamente",
-      "obtenido": "3/13 con API real | Banco: 3 | Fecha: 3 | N°Op: 3 | Monto: 0 | Precisión campos: 100.0%",
+      "obtenido": "4/24 con API real | Banco: 4 | Fecha: 4 | N°Op: 4 | Monto: 0 | Precisión campos: 100.0%",
       "conforme": true,
       "nota": "Monto null esperado: comprobante Banca de la Nación censura monto con asteriscos (formato ****101.10 no parseable por regex estándar)"
     },
@@ -73,7 +73,7 @@
       "nombre": "Latencia notificación a Almacén < 30s",
       "entrada": "Timestamp desde confirmación hasta emit Socket.io medido en cliente",
       "esperado": "Latencia < 30 000 ms",
-      "obtenido": "Latencia extremo-a-extremo estimada: 35ms (incluye round-trip HTTP + emit)",
+      "obtenido": "Latencia extremo-a-extremo estimada: 27ms (incluye round-trip HTTP + emit)",
       "conforme": true,
       "nota": "Sin clientes Socket.io conectados en test headless — latencia incluye solo el tiempo de procesamiento del servidor"
     },
@@ -82,16 +82,16 @@
       "nombre": "Reducción tiempo de revisión contable ≥ 60%",
       "entrada": "10 revisiones contables cronometradas (aprobación con OCR pre-cargado)",
       "esperado": "Reducción ≥ 60% respecto al proceso manual (referencia: 3 min/voucher)",
-      "obtenido": "Promedio OCR: 19ms (0.02s) | Ref. manual: 180s | Reducción: 100.0%",
+      "obtenido": "Promedio OCR: 26ms (0.03s) | Ref. manual: 180s | Reducción: 100.0%",
       "conforme": true,
       "nota": "Tiempo manual es estimación de referencia del equipo de Contabilidad para revisión bancaria sin OCR"
     },
     {
       "id": "CP-05",
       "nombre": "Integridad referencial: vouchers vinculados y archivos en disco",
-      "entrada": "27 pedidos en BD, 23 vouchers registrados",
+      "entrada": "40 pedidos en BD, 34 vouchers registrados",
       "esperado": "100% vouchers con archivo en disco y vínculo en BD",
-      "obtenido": "23 pedidos con voucher | 23/23 archivos en disco | Ausentes: 0",
+      "obtenido": "34 pedidos con voucher | 34/34 archivos en disco | Ausentes: 0",
       "conforme": true,
       "nota": "Todos los archivos presentes"
     },
